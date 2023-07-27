@@ -1,0 +1,36 @@
+<%- include('../_partial/_header') %>
+
+    <h1>Welcome to Potty Page</h1>
+
+    <h1 class="h1">Potty</h1>
+    
+    <div class="jumbotron">
+        <div class="container">
+            <img class="pic" src="image3.png" alt="Puppy eating out of a bowl" aria-label="Puppy eating out of a bowl">
+            <h1>Potty Training.</h1>
+            <p>
+                Depending on the age of the puppy, it will need multiple potty breaks throughout the day at regural
+                intervals and after eating, drinking, playing, and sleeping.
+            </p>
+    
+        </div>
+    </div>
+    
+    <div class="container">
+    
+        <form id="potty-form">
+            <label for="name" class="dog-label">Enter dog's age in months (1-12). </label>
+            <input type="text" id="dog-age" name="name">
+            <button class="my-button" type="submit">Get Potty Schedule</button>
+        </form>
+    
+        <div id="potty-function"></div>
+    
+        <!-- Mustache templates -->
+        <script id="potty-template" type="x-tmpl-mustache">
+                <h1>Potty Schedule Recommendation</h1>
+                <p>For {{month}} month old: <h2>Potty break: {{pottyBreaks}}<h2></p>
+            </script>
+    </div>
+<script src="/potty.js" defer></script>
+<%- include('../_partial/_footer') %>

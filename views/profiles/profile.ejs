@@ -1,0 +1,33 @@
+<%- include('../_partial/_header') %>
+
+    <h1 class="h1">My Profile</h1>
+
+    
+        <div style="text-align: center; margin-top: 20px;">
+            
+            <a href="/profile/add" type="button" class="btn btn-default">Add New Profile</a>
+        </div>
+    </form>
+
+
+<% profile.forEach(function(profile) { %>
+    <div class="col-sm-4 col-md-4">
+        <div class="thumnail">
+            <img src="/logo.png" alt="Dog Profile Picture" style="height: 200px;width: 100%;display: block;">
+            <div class="caption">
+                <h3><%= profile.dogName %></h3>
+                
+                <p>
+                    <a href="/profile/<%= profile._id %>" class="btn btn-primary" role="button">View</a>
+                    <a href="/profile/edit/<%= profile._id %>" class="btn btn-primary" role="button">Edit</a>
+                    <button class="delete-profile-button btn btn-danger" data-id="<%= profile._id %>" role="button">Delete</button>
+                </p>
+            </div>
+        </div>
+    
+    </div>
+    
+<% }); %>
+
+<script src="/profile.js" defer></script>
+     <%- include('../_partial/_footer') %>

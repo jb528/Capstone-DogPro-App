@@ -1,0 +1,72 @@
+<%- include('../_partial/_header') %>
+
+
+<h1 class="h1">Add Profile</h1>
+
+<form id="add-profile-form" action="/profile/add" method="POST" enctype="multipart/form-data">
+
+    <div style="text-align: center;">
+
+       
+
+        <img id="profile-pic" src="/logo.png" alt="Dog Profile Picture" />
+        <h1 id="dog-name">Dog Name: <input type="text" name="dogName" placeholder="Enter Dog's Name"></h1>
+        <p>Breed: <input id="dog-breed" type="text" name="dogBreed" placeholder="Enter Breed"></p>
+        <p>Age: <input id="dog-age" type="text" name="dogAge" placeholder="Enter Age"></p>
+        <p>Weight: <input id="dog-weight" type="text" name="dogWeight" placeholder="Enter Weight"></p>
+    </div>
+
+    <!-- Schedule and Behavior Section -->
+    <div class="profile-container" style="display:flex; justify-content: space-between;">
+        <!-- Feeding Schedule -->
+        <div style="flex:1; margin-right: 20px;">
+            <h2>Feeding Schedule</h2>
+            <ul id="feeding-schedule">
+                <li>Breakfast: <input type="text" name="breakfast" placeholder="8:00 AM"></li>
+                <li>Lunch: <input type="text" name="lunch" placeholder="12:00 PM"></li>
+                <li>Dinner: <input type="text" name="dinner" placeholder="6:00 PM"></li>
+            </ul>
+            <!-- <button class="my-button" id="add-feeding-item"><i class="fas fa-plus"></i></button>
+                <button class="my-button" id="remove-feeding-item"><i class="fas fa-trash"></i></button> -->
+        </div>
+
+        <!-- Potty Schedule -->
+        <div style="flex:1; margin-right: 20px;">
+            <h2>Potty Schedule</h2>
+            <ul id="potty-schedule">
+                <li>Morning: <input type="text" name="morning" placeholder="7:00 AM"></li>
+                <li>Afternoon: <input type="text" name="afternoon" placeholder="2:00 PM"></li>
+                <li>Night: <input type="text" name="night" placeholder="9:00 PM"></li>
+            </ul>
+            <!-- <button class="my-button" id="add-potty-item"><i class="fas fa-plus"></i></button>
+                <button class="my-button" id="remove-potty-item"><i class="fas fa-trash"></i></button> -->
+        </div>
+
+        <!-- Training and Behavior -->
+        <div style="flex:1;">
+            <h2>Training List</h2>
+            <ul id="training-list">
+                <li>
+                    <input type="checkbox" name="trainingList" value="Sit"> Sit
+                </li>
+                <li>
+                    <input type="checkbox" name="trainingList" value="Stay"> Stay
+                </li>
+                <!-- Add more checkboxes as needed -->
+            </ul>
+            <label for="new-training-item">New training:</label>
+            <input type="text" id="new-training-item" name="newTrainingItem">
+            <button class="my-button" id="add-training-item"><i class="fas fa-plus"></i></button>
+            <button class="my-button" id="remove-training-item"><i class="fas fa-trash"></i></button>
+
+
+
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <button type="submit" class="btn btn-default" href="#" role="button">Create Profile</button>
+    </div>
+</form>
+
+<script src="/profile.js" defer></script>
+<%- include('../_partial/_footer') %>

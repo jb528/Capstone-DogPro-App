@@ -1,0 +1,37 @@
+<%- include('../_partial/_header') %>
+
+    <h1>Welcome to Diet Page</h1>
+
+    <h1 class="h1">Diet</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <img class="pic" src="image2.png" alt="Puppy eating out of a bowl" aria-label="Puppy eating out of a bowl">
+            <h1>A Healthy Diet.</h1>
+            <p>
+                A healthy diet is essential for your dog's health. It will help your dog live a longer and happier life.
+                Puppies should be fed 3-4 times a day, while adult dogs should be fed 2 times a day. It is important to feed
+                your dog the right amount of food.
+            </p>
+    
+        </div>
+    </div>
+    
+    <div class="container">
+    
+        <form id="diet-form">
+            <label for="name" class="dog-label">Enter dog's weight in lbs. </label>
+            <input type="text" id="lbs" name="name">
+            <button class="my-button" type="submit">Get feeding recommendation</button>
+        </form>
+    
+        <div id="diet-function"></div>
+    
+        <!-- Mustache templates -->
+        <script id="diet-template" type="x-tmpl-mustache">
+                <h1>Diet Recommendation</h1>
+                <p>Feeding recommendation for {{weight}} lbs: <h2>{{diet}} per day<h2></p>
+        </script>
+    </div>
+    <script src="/diet.js" defer></script>
+
+<%- include('../_partial/_footer') %>

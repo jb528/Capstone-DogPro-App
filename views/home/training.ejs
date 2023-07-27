@@ -1,0 +1,41 @@
+<%- include('../_partial/_header') %>
+
+    <h1>Welcome to Training Page</h1>
+
+    <h1 class="h1">Behavioral</h1>
+    
+    <div class="jumbotron">
+        <div class="container">
+            <img class="pic" src="image4.png" alt="Dog shaking hands" aria-label="Dog shaking hands">
+            <h1>Behavioral Training.</h1>
+            <p>
+                Training your dog is a great way to bond with your dog and will help you build a good relationship with
+                them.
+            </p>
+    
+        </div>
+    </div>
+    
+    <div class="container">
+    
+        <form id="behavioral-form">
+            <label for="training-level" class="dog-label">Select Training Level Difficulty:</label>
+            <select id="training-level" name="training-level">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+            </select>
+            <button class="my-button" type="submit">Get Training</button>
+        </form>
+    
+    
+        <div id="behavioral-function"></div>
+    
+        <!-- Mustache templates -->
+        <script id="behavioral-template" type="x-tmpl-mustache">
+                <h1>Behavioral Training Recommendation</h1>
+                <p>For {{level}}: <h2>Start with: {{{train}}}<h2></p>
+            </script>
+    </div>
+<script src="/training.js" defer></script>
+<%- include('../_partial/_footer') %>

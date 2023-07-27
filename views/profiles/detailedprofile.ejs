@@ -1,0 +1,61 @@
+<%- include('../_partial/_header') %>
+
+
+    <h1 class="h1"><%= profile.dogName %> Profile</h1>
+
+    <form id="profile-form" action="/profile/add" method="POST">
+
+        <div style="text-align: center;">
+            <img id="profile-pic" src="/logo.png" alt="Dog Profile Picture" />
+            <h1 id="dog-name">Dog Name: <input type="text" name="dogName" placeholder="Enter Dog's Name" value="<%= profile.dogName %>"></h1>
+            <p>Breed: <input id="dog-breed" type="text" name="dogBreed" placeholder="Enter Breed" value="<%= profile.dogBreed %>"></p>
+            <p>Age: <input id="dog-age" type="text" name="dogAge" placeholder="Enter Age" value="<%= profile.dogAge %>"></p>
+            <p>Weight: <input id="dog-weight" type="text" name="dogWeight" placeholder="Enter Weight" value="<%= profile.dogWeight %>"></p>
+        </div>
+
+        <!-- Schedule and Behavior Section -->
+        <div class="profile-container" style="display:flex; justify-content: space-between;">
+            <!-- Feeding Schedule -->
+            <div style="flex:1; margin-right: 20px;">
+                <h2>Feeding Schedule</h2>
+                <ul id="feeding-schedule">
+                    <li>Breakfast: <input type="text" name="breakfast" placeholder="8:00 AM" value="<%= profile.feedingSchedule.breakfast %>"></li>
+                    <li>Lunch: <input type="text" name="lunch" placeholder="12:00 PM" value="<%= profile.feedingSchedule.lunch %>"></li>
+                    <li>Dinner: <input type="text" name="dinner" placeholder="6:00 PM" value="<%= profile.feedingSchedule.dinner %>"></li>
+                </ul>
+                <!-- <button class="my-button" id="add-feeding-item"><i class="fas fa-plus"></i></button>
+                <button class="my-button" id="remove-feeding-item"><i class="fas fa-trash"></i></button> -->
+            </div>
+
+            <!-- Potty Schedule -->
+            <div style="flex:1; margin-right: 20px;">
+                <h2>Potty Schedule</h2>
+                <ul id="potty-schedule">
+                    <li>Morning: <input type="text" name="morning" placeholder="7:00 AM" value="<%= profile.pottySchedule.morning %>"></li>
+                    <li>Afternoon: <input type="text" name="afternoon" placeholder="2:00 PM" value="<%= profile.pottySchedule.afternoon %>"></li>
+                    <li>Night: <input type="text" name="night" placeholder="9:00 PM" value="<%= profile.pottySchedule.night %>"></li>
+                </ul>
+                <!-- <button class="my-button" id="add-potty-item"><i class="fas fa-plus"></i></button>
+                <button class="my-button" id="remove-potty-item"><i class="fas fa-trash"></i></button> -->
+            </div>
+
+            <!-- Training and Behavior -->
+            <div style="flex:1;">
+                <h2>Training List</h2>
+                <ul id="training-list">
+                    <% profile.trainingList.forEach(function(trainingItem) { %>
+                        <li>
+                            <input type="checkbox" name="trainingList" value="<%= trainingItem.training %>" <%=trainingItem.checked
+                                ? 'checked' : '' %>> <%= trainingItem.training %>
+                        </li>
+                        <% }); %>
+                </ul>
+            </div>
+
+
+        </div>
+       
+    </form>
+
+
+    <%- include('../_partial/_footer') %>
