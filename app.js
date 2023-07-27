@@ -6,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var session = require('express-session');
 var flash = require("connect-flash");
+
+require('dotenv').config();
+
 var params = require("./params/params");
 var setupPassport = require('./setuppassport');
 var app = express();
