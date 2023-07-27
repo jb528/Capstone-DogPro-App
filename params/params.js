@@ -1,5 +1,5 @@
-const DATABASECONNECTION = "mongodb+srv://jpburke128:i4r4XxUVxq7lxJyB@dogprodb.gu7hypr.mongodb.net/?retryWrites=true&w=majority";
-
+// params/params.js
+const DATABASECONNECTION = process.env.DATABASECONNECTION;
 
 module.exports = {
     DATABASECONNECTION
