@@ -3,6 +3,10 @@ var ensureAuthenticated = require('../../auth/auth').ensureAuthenticated;
 var router = express.Router();
 var DogProfile = require('../../models/profile');
 
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' }); // you can configure the destination folder
+
+
 
 router.use(ensureAuthenticated);
 
@@ -27,10 +31,14 @@ router.get('/add', function (req, res) {
     });
 });
 
-router.post('/add', function (req, res) {
+router.post('/add', upload.single('profilePic'), function (req, res) {
     console.log(req.body);
+    console.log("File path:", req.file.path);
    
+    var filePath = req.file.path;
+
     var newProfile = new DogProfile({
+        profilePicturePath: filePath,
         dogName: req.body.dogName,
         dogBreed: req.body.dogBreed,
         dogAge: req.body.dogAge,
@@ -50,8 +58,10 @@ router.post('/add', function (req, res) {
         
     });
 
-  
+    console.log("New profile:", newProfile);
+
     newProfile.save()
+        
     .then(post => {
         console.log(post);
         res.json({ success: true, message: "Dog profile saved successfully." });
@@ -86,17 +96,20 @@ router.get('/edit/:profileID', function (req, res) {
         });
 });
 
-router.post('/update', async function (req, res) {
+router.post('/update', upload.single('profilePic'), async function (req, res) {
+    console.log("File path:", req.file.path);
     try {
         // Check if trainingList is an array or not, if it's not make it an array
         if (!Array.isArray(req.body.trainingList)) {
             req.body.trainingList = [req.body.trainingList];
         }
         var trainingItems = req.body.trainingList || [];
+        var filePath = req.file.path;
         
 
         // Create the new values.
         const newValues = {
+            profilePicturePath: filePath,
             dogName: req.body.dogName,
             dogBreed: req.body.dogBreed,
             dogAge: req.body.dogAge,
@@ -114,14 +127,14 @@ router.post('/update', async function (req, res) {
             trainingList: trainingItems
         };
 
-
+        console.log("updated profile:", newValues);
         // Use findOneAndUpdate to update the document directly.
         const profile = await DogProfile.findOneAndUpdate(
             { _id: req.body.profileId }, // find a document with this filter
             newValues, // document to insert when nothing was found
             { new: true, upsert: true, runValidators: true }, // options
         );
-
+        
         res.json({ success: true, message: 'Profile updated successfully' }); 
     } catch (err) {
         console.log("error updating profile: ");

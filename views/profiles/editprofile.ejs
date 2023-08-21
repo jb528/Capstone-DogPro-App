@@ -5,7 +5,8 @@
         <%= profile.dogName %> Profile
     </h1>
 
-    <form id="update-profile-form" action="/profile/update" method="POST">
+    <form id="update-profile-form" action="/profile/update" method="POST" enctype="multipart/form-data">
+        <!--<input type="file" name="profilePic" accept="image/*">-->
 
         <div style="text-align: center;">
             <img id="profile-pic" src="/logo.png" alt="Dog Profile Picture" />

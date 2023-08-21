@@ -20,6 +20,7 @@ var postSchema = mongoose.Schema({
                       checked: { type: Boolean, required: false } }
                     ],
     userID: { type: mongoose.Schema.Types.ObjectId, unique: false, required: false },
+    profilePicturePath: { type: String, required: false },
     
 });
 
