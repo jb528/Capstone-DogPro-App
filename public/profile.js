@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             var afternoon = document.getElementsByName('afternoon')[0].value;
             var night = document.getElementsByName('night')[0].value;
 
-          var trainingItems = Array.from(document.getElementsByName('trainingList'))
+            var trainingItems = Array.from(document.getElementsByName('trainingList'))
                 .map(checkbox => ({ training: checkbox.value, checked: checkbox.checked }));
 
 
@@ -42,6 +42,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 trainingList: trainingItems,
             };
             console.log(data);
+            console.log("test1 ");
+
             fetch('/profile/add', {
                 method: 'POST',
                 headers: {
@@ -49,18 +51,26 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     'Accept': 'application/json',
                 },
                 body: JSON.stringify(data),
-            })
-                .then(response => response.json())
+                })
+                .then(response => {
+                    console.log('Raw response:', response);
+                    console.log('Status code:', response.status);
+                    console.log('headers:', response.headers);
+                    return response.json();
+                })
                 .then(data => {
                     if (data.success) {
-                        window.location.href = '/profile';
-                    } else {
-                        console.log(data.message);
-                    }
+                    window.location.href = '/profile';
+                } else {
+                    // handle error
+                    console.log(data.message);
+                }
+            
                 })
                 .catch((error) => {
-                    console.error('Error:', error);
+                    console.error('Error add:', error);
                 });
+
         });
     }
 
@@ -82,7 +92,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             var afternoon = document.getElementsByName('afternoon')[0].value;
             var night = document.getElementsByName('night')[0].value;
 
-           var trainingItems = Array.from(document.getElementsByName('trainingList'))
+            var trainingItems = Array.from(document.getElementsByName('trainingList'))
                 .map(checkbox => ({ training: checkbox.value, checked: checkbox.checked }));
 
 

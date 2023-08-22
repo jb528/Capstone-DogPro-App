@@ -1,16 +1,13 @@
 var express = require('express');
 var ensureAuthenticated = require('../../auth/auth').ensureAuthenticated;
 var router = express.Router();
-var DogProfile = require('../../models/profile');
-
-var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' }); // you can configure the destination folder
-
+var DogProfile = require('../../models/profile')
 
 
 router.use(ensureAuthenticated);
 
 router.get('/', function (req, res) {
+    console.log("GET /");
     DogProfile.find({ userID: req.user._id })
     .then(profile => {
         res.render('profiles/profile', { profile: profile });
@@ -22,6 +19,7 @@ router.get('/', function (req, res) {
 
 
 router.get('/add', function (req, res) {
+    console.log("GET /add");
      DogProfile.find({ userID: req.user._id })
     .then(profile => {
         res.render('profiles/add', { profile: profile });
@@ -31,48 +29,57 @@ router.get('/add', function (req, res) {
     });
 });
 
-router.post('/add', upload.single('profilePic'), function (req, res) {
-    console.log(req.body);
-    console.log("File path:", req.file.path);
-   
-    var filePath = req.file.path;
+router.post('/add', async function (req, res) {
+    console.log("POST /add");
+    try {
+        // Check if trainingList is an array or not, if it's not make it an array
+        if (!Array.isArray(req.body.trainingList)) {
+            req.body.trainingList = [req.body.trainingList];
+        }
+        var trainingItems = req.body.trainingList || [];
+        console.log("req.body: ", req.body);
 
-    var newProfile = new DogProfile({
-        profilePicturePath: filePath,
-        dogName: req.body.dogName,
-        dogBreed: req.body.dogBreed,
-        dogAge: req.body.dogAge,
-        dogWeight: req.body.dogWeight,
-        feedingSchedule: {
-            breakfast: req.body.feedingSchedule.breakfast,
-            lunch: req.body.feedingSchedule.lunch,
-            dinner: req.body.feedingSchedule.dinner,
-        },
-        pottySchedule: {
-            morning: req.body.pottySchedule.morning,
-            afternoon: req.body.pottySchedule.afternoon,
-            night: req.body.pottySchedule.night,
-        },
-        trainingList: req.body.trainingList,
-        userID: req.user._id,
-        
-    });
+        // Validate or provide defaults for feedingSchedule and pottySchedule
+        var feedingSchedule = req.body.feedingSchedule || {};
+        var pottySchedule = req.body.pottySchedule || {};
 
-    console.log("New profile:", newProfile);
+        // Create the new profile.
+        var newProfile = new DogProfile({
+            dogName: req.body.dogName,
+            dogBreed: req.body.dogBreed,
+            dogAge: req.body.dogAge,
+            dogWeight: req.body.dogWeight,
+            feedingSchedule: {
+                breakfast: feedingSchedule.breakfast || '',
+                lunch: feedingSchedule.lunch || '',
+                dinner: feedingSchedule.dinner || ''
+            },
+            pottySchedule: {
+                morning: pottySchedule.morning || '',
+                afternoon: pottySchedule.afternoon || '',
+                night: pottySchedule.night || ''
+            },
+            trainingList: trainingItems,
+            userID: req.user._id
+        });
 
-    newProfile.save()
-        
-    .then(post => {
-        console.log(post);
+        console.log("New profile:", newProfile);
+
+        // Save the profile
+        await newProfile.save();
+
         res.json({ success: true, message: "Dog profile saved successfully." });
-    })
-    .catch(err => {
+    } catch (err) {
         console.log(err);
-        res.json({ success: false, message: "There was an error saving the dog profile." });
-    });
+        res.status(500).json({ success: false, message: "There was an error saving the dog profile." });
+    }
 });
 
+
+
+
 router.get('/:profileID', function (req, res) {
+    console.log("GET /:profileID");
     DogProfile.findById(req.params.profileID)
         .then(profile => {
             res.render('profiles/detailedprofile', { profile: profile });
@@ -85,6 +92,7 @@ router.get('/:profileID', function (req, res) {
 });
 
 router.get('/edit/:profileID', function (req, res) {
+    console.log("GET /edit/:profileID");
     DogProfile.findById(req.params.profileID)
         .then(profile => {
             res.render('profiles/editprofile', { profile: profile });
@@ -96,20 +104,21 @@ router.get('/edit/:profileID', function (req, res) {
         });
 });
 
-router.post('/update', upload.single('profilePic'), async function (req, res) {
-    console.log("File path:", req.file.path);
+router.post('/update', async function (req, res) {
+    console.log("POST /update");
+    
     try {
         // Check if trainingList is an array or not, if it's not make it an array
         if (!Array.isArray(req.body.trainingList)) {
             req.body.trainingList = [req.body.trainingList];
         }
         var trainingItems = req.body.trainingList || [];
-        var filePath = req.file.path;
+        
         
 
         // Create the new values.
         const newValues = {
-            profilePicturePath: filePath,
+            
             dogName: req.body.dogName,
             dogBreed: req.body.dogBreed,
             dogAge: req.body.dogAge,

@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 
 var postSchema = mongoose.Schema({
     dogName: { type: String, required: true },
-    dogBreed: { type: String, required: true },
-    dogAge: { type: Number, required: true },
-    dogWeight: { type: Number, required: true },
+    dogBreed: { type: String, required: false },
+    dogAge: { type: Number, required: false },
+    dogWeight: { type: Number, required: false },
     feedingSchedule: {
         breakfast: { type: Number, required: false },
         lunch: { type: Number, required: false },
@@ -20,7 +20,7 @@ var postSchema = mongoose.Schema({
                       checked: { type: Boolean, required: false } }
                     ],
     userID: { type: mongoose.Schema.Types.ObjectId, unique: false, required: false },
-    profilePicturePath: { type: String, required: false },
+    
     
 });
 
